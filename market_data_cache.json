@@ -1,0 +1,350 @@
+{
+  "VFIAX": {
+    "beta": 1.0,
+    "live_price": 672.1,
+    "dividend_yield": 0.7959,
+    "ticker_type": "Mutual Fund"
+  },
+  "VTSAX": {
+    "beta": 1.03,
+    "live_price": 174.25,
+    "dividend_yield": 1.5822,
+    "ticker_type": "Mutual Fund"
+  },
+  "VGT": {
+    "beta": 1.42,
+    "live_price": 113.65,
+    "dividend_yield": null,
+    "ticker_type": "ETF"
+  },
+  "FELIX": {
+    "beta": 2.09,
+    "live_price": 199.47,
+    "dividend_yield": 0.0,
+    "ticker_type": "Mutual Fund"
+  },
+  "VIGAX": {
+    "beta": 1.24,
+    "live_price": 258.33,
+    "dividend_yield": 0.584,
+    "ticker_type": "Mutual Fund"
+  },
+  "VIMAX": {
+    "beta": 0.99,
+    "live_price": 384.43,
+    "dividend_yield": 0.7671,
+    "ticker_type": "Mutual Fund"
+  },
+  "VHT": {
+    "beta": 0.62,
+    "live_price": 286.55,
+    "dividend_yield": 1.0016,
+    "ticker_type": "ETF"
+  },
+  "CASH": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "MGK": {
+    "beta": 1.23,
+    "live_price": 85.33,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "VYM": {
+    "beta": 0.7,
+    "live_price": 158.15,
+    "dividend_yield": 2.21,
+    "ticker_type": "ETF"
+  },
+  "SCHD": {
+    "beta": 0.59,
+    "live_price": 32.495,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "TSLA": {
+    "beta": 1.798,
+    "live_price": 386.08,
+    "dividend_yield": 0.0,
+    "ticker_type": "Stock"
+  },
+  "AAPL": {
+    "beta": 1.086,
+    "live_price": 293.045,
+    "dividend_yield": 0.3567,
+    "ticker_type": "Stock"
+  },
+  "VCR": {
+    "beta": 1.25,
+    "live_price": 383.93,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "VOO": {
+    "beta": 1.0,
+    "live_price": 670.1,
+    "dividend_yield": 0.8151,
+    "ticker_type": "ETF"
+  },
+  "VXUS": {
+    "beta": 0.92,
+    "live_price": 83.6085,
+    "dividend_yield": 2.66,
+    "ticker_type": "ETF"
+  },
+  "VT": {
+    "beta": 0.98,
+    "live_price": 153.14,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "VDEQX": {
+    "beta": 1.05,
+    "live_price": 55.51,
+    "dividend_yield": 0.6,
+    "ticker_type": "Mutual Fund"
+  },
+  "DDLEI": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "21J36109": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "TRF30": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "DDLAF": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "FXAIX": {
+    "beta": 1.0,
+    "live_price": 252.98,
+    "dividend_yield": 1.03,
+    "ticker_type": "Mutual Fund"
+  },
+  "NVDA": {
+    "beta": 2.202,
+    "live_price": 201.43,
+    "dividend_yield": 0.02,
+    "ticker_type": "Stock"
+  },
+  "FSELX": {
+    "beta": 2.12,
+    "live_price": 64.86,
+    "dividend_yield": 0.0,
+    "ticker_type": "Mutual Fund"
+  },
+  "SMH": {
+    "beta": 1.97,
+    "live_price": 589.56,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "QTUM": {
+    "beta": 1.64,
+    "live_price": 154.65,
+    "dividend_yield": 0.73,
+    "ticker_type": "ETF"
+  },
+  "FTEC": {
+    "beta": 1.41,
+    "live_price": 271.425,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "SPAXX": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "VMGMX": {
+    "beta": 1.22,
+    "live_price": 123.6,
+    "dividend_yield": 0.0,
+    "ticker_type": "Mutual Fund"
+  },
+  "VMRXX": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "SWEEP": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "LIC": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "T-BILL": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "TIPS": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "PNC": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "CSMIF": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "CRYPTO": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Crypto"
+  },
+  "VUSXX": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "JEPQ": {
+    "beta": 0.77,
+    "live_price": 58.515,
+    "dividend_yield": 0.0,
+    "ticker_type": "ETF"
+  },
+  "CTVA": {
+    "beta": 0.572,
+    "live_price": 74.79,
+    "dividend_yield": 0.967,
+    "ticker_type": "Stock"
+  },
+  "DD": {
+    "beta": 1.076,
+    "live_price": 45.475,
+    "dividend_yield": 2.7075,
+    "ticker_type": "Stock"
+  },
+  "BRK.B": {
+    "beta": 0.617,
+    "live_price": 482.43,
+    "dividend_yield": 0.0,
+    "ticker_type": "Stock"
+  },
+  "DOW": {
+    "beta": 0.405,
+    "live_price": 34.8,
+    "dividend_yield": 5.111,
+    "ticker_type": "Stock"
+  },
+  "XYZ": {
+    "beta": 2.552,
+    "live_price": 67.1102,
+    "dividend_yield": 0.0,
+    "ticker_type": "Stock"
+  },
+  "VKTX": {
+    "beta": 0.678,
+    "live_price": 27.54,
+    "dividend_yield": 0.0,
+    "ticker_type": "Stock"
+  },
+  "PGRP": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "FCON_POOL": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "CKG": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "HSA_CASH": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "LC_IDX": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "TRP_LCG": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "DMND_HILL": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Mutual Fund"
+  },
+  "TQQQ": {
+    "beta": 3.91,
+    "live_price": 71.67,
+    "dividend_yield": null,
+    "ticker_type": "ETF"
+  },
+  "ETH": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Crypto"
+  },
+  "USDC": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "FDRXX": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  },
+  "FCASH": {
+    "beta": 0.0,
+    "live_price": 1.0,
+    "dividend_yield": 3.628,
+    "ticker_type": "Cash"
+  }
+}
