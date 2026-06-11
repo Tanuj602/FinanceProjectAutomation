@@ -1,8 +1,8 @@
 # Portfolio AI — Financial Intelligence Pipeline
 
-A Python pipeline that ingests heterogeneous brokerage PDFs — Vanguard, Merrill Lynch, Fidelity — normalizes 130+ positions across 23 accounts into a unified operational database, enriches with live market data, and layers an AI operator interface for plain-English portfolio intelligence.
+A Python pipeline that ingests heterogeneous brokerage PDFs — Vanguard, Merrill Lynch, Fidelity — normalizes 130+ positions across 23 accounts into a unified operational database, enriches with live market data, layers an AI operator interface for plain-English portfolio intelligence, and pushes real-time alerts to your phone.
 
-Built for a real user managing a multi-broker portfolio across retirement accounts, taxable accounts, HSAs, international assets, and cash instruments.
+Built for a real user managing a ~$5.9M multi-broker portfolio across retirement accounts, taxable accounts, HSAs, international assets, and cash instruments.
 
 ---
 
@@ -40,12 +40,14 @@ Built for a real user managing a multi-broker portfolio across retirement accoun
 │                                                             │
 │              fetch_market_data() via yfinance               │
 │         beta · live price · dividend yield · ticker type    │
+│    split-adjusted (VGT 8:1, MGK 5:1 — effective Apr 2026)  │
 │                          │                                  │
 │                    enrich_excel()                           │
-│         unified output.xlsx — columns A through O          │
+│         unified output.xlsx — columns A through O           │
+│         cols N & O are live Excel formulas (=J*E, =N-G)    │
 │                          │                                  │
 │              build_summary_sheet()                          │
-│         KPIs · gain/loss vs snapshot · breakdown by type    │
+│     KPIs · gain/loss vs cost basis · breakdown by type      │
 └─────────────────────────────────────────────────────────────┘
                            │
                            ▼
@@ -66,6 +68,26 @@ Built for a real user managing a multi-broker portfolio across retirement accoun
 │                                                             │
 │            Multi-turn · streaming · context-grounded        │
 └─────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│               STAGE 4 — REAL-TIME ALERTS (ntfy)             │
+│                                                             │
+│         Every run → push notification to phone              │
+│                                                             │
+│   detect_significant_changes()                              │
+│     diff current vs previous market_data_cache.json         │
+│     price change ≥ ±1%  → alert with $ portfolio impact     │
+│     yield change ≥ ±0.5pp → alert                           │
+│                                                             │
+│   send_ntfy_notification()                                  │
+│     always sends: portfolio value + net gain/loss           │
+│     urgent: fires when thresholds breached                  │
+│                                                             │
+│   Portfolio updated                                         │
+│   Value:   $5,900,000  (+0.07% vs last run)                 │
+│   Net G/L: +$860,000  vs cost basis                         │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -74,7 +96,7 @@ Built for a real user managing a multi-broker portfolio across retirement accoun
 
 | File | Purpose |
 |------|---------|
-| `databaseproject.py` | Stages 1 & 2 — PDF ingestion, parsing, SQLite normalization, market data enrichment, Excel output |
+| `consolidatedfinancialdatabaseproject.py` | Stages 1, 2 & 4 — PDF ingestion, SQLite normalization, market data enrichment, Excel output, ntfy alerts |
 | `stage3_ai_qa.py` | Stage 3 — AI Q&A layer, Anthropic API integration, interactive CLI |
 
 ---
@@ -84,14 +106,20 @@ Built for a real user managing a multi-broker portfolio across retirement accoun
 **Requirements**
 
 ```bash
-pip install pypdf yfinance pandas openpyxl numpy anthropic
+pip install pypdf yfinance pandas openpyxl numpy anthropic requests
 ```
 
-**API key**
+**API key (Stage 3)**
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
 ```
+
+**ntfy push notifications (Stage 4)**
+
+1. Install the [ntfy app](https://ntfy.sh) on iOS or Android
+2. Subscribe to a topic name (e.g. `databaseautomation`)
+3. Set `NTFY_TOPIC` at the top of `consolidatedfinancialdatabaseproject.py` to match
 
 ---
 
@@ -105,17 +133,36 @@ export ANTHROPIC_API_KEY=sk-ant-...
 04272026 Fidelity Portfolio Positions.pdf
 ```
 
-**Step 2 — Run Stages 1 & 2**
+**Step 2 — Run Stages 1, 2 & 4**
 
 ```bash
-python databaseproject.py
+python consolidatedfinancialdatabaseproject.py
+```
+
+```
+Building unified positions matrix…
+Fetching live market data (Beta, Price, Yield)…
+  3-month T-bill rate: 3.63%
+  Fetching market data for 32 tickers…
+  Excel enriched → output.xlsx
+Building portfolio summary sheet…
+  Summary sheet written → output.xlsx
+Checking for significant price/yield changes…
+  Value:   $    5,900,000  (+0.07% vs last run)
+  Net G/L: +$     860,000  vs cost basis
+  No significant changes vs last run.
+  ntfy notification sent → topic: databaseautomation
+  Market data cached → market_data_cache.json
+------------------------------------------------------------
+FINISHED SUCCESSFULLY!
 ```
 
 Outputs:
 - `vanguard_portfolio.db` — normalized SQLite database
-- `output.xlsx` — enriched positions matrix with live market data
+- `output.xlsx` — enriched positions matrix (columns A–O)
+- `market_data_cache.json` — cached market data for next-run diff
 
-**Step 3 — Run Stage 3**
+**Step 3 — Run the AI Q&A layer**
 
 ```bash
 python stage3_ai_qa.py
@@ -127,20 +174,15 @@ python stage3_ai_qa.py
 ============================================================
 Portfolio loaded. Ask anything about the data.
 
-Example questions:
-  • What is my total tech exposure?
-  • Which account has the highest unrealized gains?
-  • How much is in dividend ETFs vs growth ETFs?
-  • What percentage of the portfolio is international?
-  • Which single position is the largest holding?
-
 You: What is my total tech exposure?
 
 Claude: Tech holdings represent approximately 34% of the investable
 portfolio. The primary positions are VGT ($273k, Saving Invested Dow),
 VIGAX ($256k across two accounts), FSELX ($264k), and NVDA ($57k across
-Fidelity and Robinhood. Combined market value is approximately $612,000
+Fidelity and Robinhood). Combined market value is approximately $612,000
 across four accounts.
+
+You: Which account has the highest unrealized gain?
 ```
 
 ---
@@ -153,11 +195,15 @@ Each brokerage produces a structurally different PDF. `read_pdf_text()` extracts
 
 ### Stage 2 — Live enrichment
 
-`fetch_market_data()` queries yfinance for beta, live price, and dividend yield across all tradeable symbols. Non-market instruments (cash, money markets, T-bills, HSA balances) are classified and handled separately. `enrich_excel()` writes columns I–O into the unified spreadsheet. `build_summary_sheet()` computes KPIs against the April snapshot.
+`fetch_market_data()` queries yfinance for beta, live price, and dividend yield across all tradeable symbols using a three-layer fallback: `trailingAnnualDividendYield` → `rate/price` computation → `dividendYield` with format detection, hard-capped at 15% to filter bad data. Non-market instruments (cash, money markets, T-bills, HSA balances) receive the current 3-month T-bill rate as yield. `enrich_excel()` writes columns I–O into the unified spreadsheet with live Excel formulas in N (`=J*E`) and O (`=N-G`). Holdings are split-adjusted for the April 21, 2026 Vanguard splits (VGT 8:1, MGK 5:1).
 
 ### Stage 3 — AI operator layer
 
-`load_portfolio_context()` serializes the entire SQLite database into a structured text block — every account, every holding, cost basis, and balance. This context is injected into the Anthropic API alongside the user's question. Claude reasons over the actual numbers, not its training data. Conversation history is maintained across turns so follow-up questions resolve correctly.
+`load_portfolio_context()` serializes the entire SQLite database into a structured text block — every account, every holding, cost basis, and balance. This context is injected into the Anthropic API alongside the user's question. Claude reasons over the actual numbers, not its training data. Conversation history is maintained across turns so follow-up questions resolve correctly. Responses stream word-by-word.
+
+### Stage 4 — Real-time alerts
+
+`detect_significant_changes()` diffs current market data against `market_data_cache.json` from the previous run. Price moves ≥ ±1% or yield changes ≥ ±0.5 percentage points trigger alerts with per-position dollar impact. The function also computes full portfolio totals (value, gain/loss, % change) so everything is self-contained. `send_ntfy_notification()` fires on every run — quiet ping for routine updates, high-priority buzz for threshold breaches.
 
 ---
 
@@ -165,7 +211,7 @@ Each brokerage produces a structurally different PDF. `read_pdf_text()` extracts
 
 Brokerage data is siloed by design. Each institution exports a different format, uses different field names, and structures its PDFs differently. The core challenge is the same one faced by any financial data platform: ingest from heterogeneous sources, normalize to a common schema, and make the unified data queryable by non-technical operators.
 
-The AI layer demonstrates that LLMs become genuinely useful for financial decision-making when grounded in proprietary data — not when asked to answer from training data alone.
+The AI layer demonstrates that LLMs become genuinely useful for financial decision-making when grounded in proprietary data — not when asked to answer from training data alone. The alert system closes the loop: the pipeline doesn't just produce a report, it watches the portfolio and surfaces what matters.
 
 ---
 
@@ -175,6 +221,7 @@ The AI layer demonstrates that LLMs become genuinely useful for financial decisi
 - `pypdf.extract_text()` reconstructs reading order from `(x, y)` coordinates, which can misorder multi-column tables. Parsers are written defensively for this reason.
 - yfinance beta is unavailable for ETFs and mutual funds via `info['beta']`. The fallback computes 3-year rolling beta from monthly returns against SPY.
 - The Anthropic API context window limits prompt length. At ~130 positions the context is well within limits, but portfolios with 500+ positions would require chunking or summarization.
+- ntfy push notifications require the ntfy app subscribed to the configured topic. The pipeline continues without error if the notification fails.
 
 ---
 
